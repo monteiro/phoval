@@ -1,11 +1,10 @@
 package main
 
-import (
-	"phoval/pkg/storage"
-)
+import "phoval/service/notification"
 
-// app configuration
+// App configuration
 type App struct {
-	Addr     string
-	Database storage.Database
+	Addr string
+	// notifier to send SMS or Emails
+	Notifier notification.Notifier
 }
