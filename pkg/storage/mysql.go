@@ -62,11 +62,7 @@ func (d *Database) NewVerification(countryCode string, phoneNumber string) (stri
 		return "", err
 	}
 
-	uuid, err := uuid.NewV4()
-	if err != nil {
-		return "", err
-	}
-
+	uuid := uuid.NewV4()
 	code, err := generator.GenerateRandomDigits()
 	if err != nil {
 		return "", err
