@@ -1,7 +1,7 @@
 package main
 
 import (
-	"2fa-api/pkg/storage"
+	"phoval/pkg/storage"
 )
 
 // app configuration

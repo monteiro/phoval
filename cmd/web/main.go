@@ -1,8 +1,8 @@
 package main
 
 import (
-	"2fa-api/pkg/storage"
 	"flag"
+	"phoval/pkg/storage"
 
 	_ "github.com/go-sql-driver/mysql"
 
