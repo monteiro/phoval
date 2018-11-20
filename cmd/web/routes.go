@@ -8,7 +8,7 @@ import (
 
 func (app *App) Routes() http.Handler {
 	mux := pat.New()
-	mux.Post("/phone/verification/status", http.HandlerFunc(app.CreateNewVerification))
-	mux.Put("/phone/verification/status", http.HandlerFunc(app.ValidatePhone))
+	mux.Post("/phone/verification", http.HandlerFunc(app.CreateNewVerification))
+	mux.Put("/phone/verification", http.HandlerFunc(app.ValidatePhone))
 	return LogRequest(mux)
 }
