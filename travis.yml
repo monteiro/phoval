@@ -7,7 +7,7 @@ go:
 env:
   - DEP_VERSION="v0.5.0"
 
-go_import_path: github.com/monteiro/2fa-api
+go_import_path: github.com/monteiro/phoval
 
 before_install:
   # Download the binary to bin folder in $GOPATH

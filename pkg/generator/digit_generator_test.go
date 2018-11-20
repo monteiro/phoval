@@ -1,7 +1,7 @@
 package generator_test
 
 import (
-	"2fa-api/pkg/generator"
+	"phoval/pkg/generator"
 	"strconv"
 	"testing"
 )

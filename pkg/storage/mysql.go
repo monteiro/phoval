@@ -1,8 +1,8 @@
 package storage
 
 import (
-	"2fa-api/pkg/generator"
 	"fmt"
+	"phoval/pkg/generator"
 	"strconv"
 	"time"
 
