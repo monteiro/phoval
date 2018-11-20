@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"phoval/service/notification"
 	"strconv"
 )
 
@@ -18,6 +19,11 @@ func (app *App) CreateNewVerification(w http.ResponseWriter, r *http.Request) {
 	countryCode, err := getQueryParam(r, "country_code")
 	if err != nil {
 		app.BadRequest(w, "'country_code' is mandatory when creating a new verification")
+		return
+	}
+
+	if !notification.DialCode(countryCode).Valid() {
+		app.BadRequest(w, "'country_code' is not valid")
 		return
 	}
 
@@ -40,6 +46,11 @@ func (app *App) ValidatePhone(w http.ResponseWriter, r *http.Request) {
 	countryCode, err := getQueryParam(r, "country_code")
 	if err != nil {
 		app.BadRequest(w, "'country_code' is mandatory when creating a new verification")
+		return
+	}
+
+	if !notification.DialCode(countryCode).Valid() {
+		app.BadRequest(w, "'country_code' is not valid")
 		return
 	}
 
