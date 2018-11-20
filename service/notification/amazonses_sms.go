@@ -8,7 +8,7 @@ import (
 
 // Send SMS to a specific number with a specific SMS
 // Need to set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to send the message using your AWS account
-func (n *VerifyNotification) Send() error {
+func Send(n *VerifyNotification) error {
 	sess := session.Must(session.NewSession())
 	svc := sns.New(sess)
 	attrs := map[string]*sns.MessageAttributeValue{}

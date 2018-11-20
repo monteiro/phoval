@@ -11,7 +11,7 @@ const (
 	Transactional = "Transactional"
 )
 
-// VerifyNotification that the user receives with the code
+// VerifyNotification send a message to the user with the code
 type VerifyNotification struct {
 	// phone number to send the message
 	PhoneNumber string
