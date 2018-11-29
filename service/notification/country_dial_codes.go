@@ -260,7 +260,8 @@ func init() {
 // Valid validates if the dial code exists in the list
 func (d DialCode) Valid() bool {
 	for _, element := range by_alpha2 {
-		if element.DialCode == string(d) {
+		c := "+" + string(d)
+		if element.DialCode == c {
 			return true
 		}
 	}
