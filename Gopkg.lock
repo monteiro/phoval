@@ -2,10 +2,9 @@
 
 
 [[projects]]
-  digest = "1:81cd4e89ba59f18050111a63632f873349899d6364ae89388b291b5c8721eb11"
+  digest = "1:9040a1f87c9a3b16d847d753e034dade646379285651449b22c94a0fdd9e4474"
   name = "github.com/aws/aws-sdk-go"
   packages = [
-    ".",
     "aws",
     "aws/awserr",
     "aws/awsutil",
@@ -57,17 +56,6 @@
   version = "v1.4.1"
 
 [[projects]]
-  digest = "1:56c8dc5b467c8bc95a6371109740c3c97b9aa4218a89d38b6c5e83303f05ce9a"
-  name = "github.com/golang-migrate/migrate"
-  packages = [
-    "source",
-    "source/file",
-  ]
-  pruneopts = "UT"
-  revision = "4937cd088f7c7193ee59b319c1c2caa7482aae8e"
-  version = "v3.5.4"
-
-[[projects]]
   digest = "1:e22af8c7518e1eab6f2eab2b7d7558927f816262586cd6ed9f349c97a6c285c4"
   name = "github.com/jmespath/go-jmespath"
   packages = ["."]
@@ -94,13 +82,11 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/aws/aws-sdk-go",
     "github.com/aws/aws-sdk-go/aws",
     "github.com/aws/aws-sdk-go/aws/session",
     "github.com/aws/aws-sdk-go/service/sns",
     "github.com/bmizerany/pat",
     "github.com/go-sql-driver/mysql",
-    "github.com/golang-migrate/migrate/source/file",
     "github.com/satori/go.uuid",
   ]
   solver-name = "gps-cdcl"

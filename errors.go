@@ -1,4 +1,4 @@
-package main
+package phoval
 
 import (
 	"encoding/json"
@@ -10,15 +10,15 @@ type ErrorResponse struct {
 	Description string `json:"description"`
 }
 
-func (app *App) BadRequest(w http.ResponseWriter, desc string) {
-	app.error(w, desc, http.StatusBadRequest)
+func (s *Server) BadRequest(w http.ResponseWriter, desc string) {
+	s.error(w, desc, http.StatusBadRequest)
 }
 
-func (app *App) NotFound(w http.ResponseWriter, desc string) {
-	app.error(w, desc, http.StatusNotFound)
+func (s *Server) NotFound(w http.ResponseWriter, desc string) {
+	s.error(w, desc, http.StatusNotFound)
 }
 
-func (app *App) error(w http.ResponseWriter, desc string, status int) {
+func (s *Server) error(w http.ResponseWriter, desc string, status int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
 	w.WriteHeader(http.StatusBadRequest)
@@ -28,5 +28,11 @@ func (app *App) error(w http.ResponseWriter, desc string, status int) {
 		Description: desc,
 	}); err != nil {
 		checkError(err)
+	}
+}
+
+func checkError(e error) {
+	if e != nil {
+		panic(e)
 	}
 }
