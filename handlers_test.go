@@ -9,18 +9,11 @@ import (
 	"testing"
 )
 
+const anyPort = ":4000"
+
 func TestHandleCreateVerification(t *testing.T) {
-	method := "POST"
 	url := "/phone/verification?country_code=351&phone_number=918888888"
-
-	srv := phoval.NewHttpServer(":4000", storage.NewInMemoryStorage())
-	req, err := http.NewRequest(method, url, nil)
-	if err != nil {
-		t.Errorf("Error creating request")
-	}
-
-	w := httptest.NewRecorder()
-	srv.Handler.ServeHTTP(w, req)
+	w := runTestHttpServer(t, storage.NewInMemoryStorage(), "POST", url)
 
 	if w.Code != http.StatusCreated {
 		t.Errorf("Handler returned wrong status code: got %v want %v", w.Code, http.StatusCreated)
@@ -43,10 +36,60 @@ func TestHandleVerification(t *testing.T) {
 		Code:        code,
 	}
 
-	method := "PUT"
 	url := fmt.Sprintf("/phone/verification?country_code=%s&phone_number=%s&code=%s", countryCode, phoneNumber, code)
+	w := runTestHttpServer(t, m, "PUT", url)
 
-	srv := phoval.NewHttpServer(":4000", m)
+	if w.Code != http.StatusNoContent {
+		t.Errorf("Handler returned wrong status code: got %v want %v", w.Code, http.StatusNoContent)
+	}
+}
+
+var handleCreateVerificationArgsValidationTests = []struct {
+	phoneNumber string
+	countryCode string
+}{
+	{"", ""},
+	{"91991999", ""},
+	{"91991999", "3333333333"},
+}
+
+func TestHandleCreateVerificationValidationErrors(t *testing.T) {
+	for _, vt := range handleCreateVerificationArgsValidationTests {
+		t.Run(vt.phoneNumber+":"+vt.countryCode, func(t *testing.T) {
+			url := fmt.Sprintf("/phone/verification?country_code=%s&phone_number=%s", vt.countryCode, vt.phoneNumber)
+			w := runTestHttpServer(t, storage.NewInMemoryStorage(), "POST", url)
+			if w.Code != http.StatusBadRequest {
+				t.Errorf("Handler returned wrong status code: got %v want %v", w.Code, http.StatusBadRequest)
+			}
+		})
+	}
+}
+
+var handleVerificationArgsValidationTests = []struct {
+	phoneNumber string
+	countryCode string
+	code        string
+}{
+	{"", "", ""},
+	{"", "351", ""},
+	{"91991999", "", "124556"},
+	{"91991999", "351", ""},
+}
+
+func TestHandleVerificationValidationErrors(t *testing.T) {
+	for _, vt := range handleVerificationArgsValidationTests {
+		t.Run(vt.phoneNumber+":"+vt.countryCode+":"+vt.code, func(t *testing.T) {
+			url := fmt.Sprintf("/phone/verification?country_code=%s&phone_number=%s&code=%s", vt.countryCode, vt.phoneNumber, vt.code)
+			w := runTestHttpServer(t, storage.NewInMemoryStorage(), "PUT", url)
+			if w.Code != http.StatusBadRequest {
+				t.Errorf("Handler returned wrong status code: got %v want %v", w.Code, http.StatusBadRequest)
+			}
+		})
+	}
+}
+
+func runTestHttpServer(t *testing.T, v phoval.VerificationStorage, method string, url string) *httptest.ResponseRecorder {
+	srv := phoval.NewHttpServer(anyPort, v)
 	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
 		t.Errorf("Error creating request")
@@ -55,7 +98,5 @@ func TestHandleVerification(t *testing.T) {
 	w := httptest.NewRecorder()
 	srv.Handler.ServeHTTP(w, req)
 
-	if w.Code != http.StatusNoContent {
-		t.Errorf("Handler returned wrong status code: got %v want %v", w.Code, http.StatusNoContent)
-	}
+	return w
 }
