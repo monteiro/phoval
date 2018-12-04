@@ -14,6 +14,10 @@ func (s *Server) BadRequest(w http.ResponseWriter, desc string) {
 	s.error(w, desc, http.StatusBadRequest)
 }
 
+func (s *Server) InternalServerError(w http.ResponseWriter) {
+	s.error(w, "Internal Server Error", http.StatusInternalServerError)
+}
+
 func (s *Server) NotFound(w http.ResponseWriter, desc string) {
 	s.error(w, desc, http.StatusNotFound)
 }

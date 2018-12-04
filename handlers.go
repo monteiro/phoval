@@ -16,6 +16,11 @@ const (
 
 func (s *Server) HandleCreateVerification() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		locale, err := getQueryParam(r, "locale")
+		if err != nil {
+			locale = "en"
+		}
+
 		phoneNumber, err := getQueryParam(r, "phone_number")
 		if err != nil {
 			s.BadRequest(w, phoneNumberMandatoryErrorMessage)
@@ -36,10 +41,13 @@ func (s *Server) HandleCreateVerification() http.HandlerFunc {
 		command := CreateVerificationCommand{
 			CountryCode: countryCode,
 			PhoneNumber: phoneNumber,
+			Locale:      locale,
+			From:        s.Brand,
 		}
-		resp, err := createVerificationCommandHandler(s.Storage, command)
+
+		resp, err := createVerificationCommandHandler(s.Storage, s.VerificationNotifier, command)
 		if err != nil {
-			panic(err)
+			s.InternalServerError(w)
 		}
 
 		w.Header().Add("verification_id", resp.id)

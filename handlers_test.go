@@ -89,7 +89,7 @@ func TestHandleVerificationValidationErrors(t *testing.T) {
 }
 
 func runTestHttpServer(t *testing.T, v phoval.VerificationStorage, method string, url string) *httptest.ResponseRecorder {
-	srv := phoval.NewHttpServer(anyPort, v)
+	srv := phoval.NewHttpServer("test", anyPort, v, "")
 	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
 		t.Errorf("Error creating request")

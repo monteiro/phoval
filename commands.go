@@ -1,13 +1,44 @@
 package phoval
 
-func createVerificationCommandHandler(s VerificationStorage, c CreateVerificationCommand) (CreateVerificationResponse, error) {
+import (
+	"log"
+	"phoval/messages"
+	"phoval/pkg/generator"
+	"phoval/service/notification"
+)
+
+func createVerificationCommandHandler(s VerificationStorage, v VerificationNotifier, c CreateVerificationCommand) (CreateVerificationResponse, error) {
+	r := CreateVerificationResponse{}
+
+	code, err := generator.GenerateRandomDigits()
+	if err != nil {
+		return r, err
+	}
+
 	id, err := s.CreateVerification(&PhoneVerification{
 		CountryCode: c.CountryCode,
 		PhoneNumber: c.PhoneNumber,
+		Code:        code,
 	})
-
 	if err != nil {
-		return CreateVerificationResponse{}, err
+		return r, err
+	}
+
+	m, err := messages.Template(c.Locale, code)
+	if err != nil {
+		return r, err
+	}
+
+	n := notification.VerificationNotification{
+		CountryCode: c.CountryCode,
+		PhoneNumber: c.PhoneNumber,
+		From:        c.From,
+		Message:     m,
+	}
+
+	if err := v.Send(n); err != nil {
+		log.Fatalf("error sending message: '%v'", n)
+		return r, err
 	}
 
 	return CreateVerificationResponse{

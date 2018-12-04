@@ -17,6 +17,8 @@ func main() {
 	passwordDB := flag.String("passworddb", "root", "database password")
 	hostDB := flag.String("hostdb", "127.0.0.1", "database address")
 	nameDB := flag.String("namedb", "verif2fa", "database name")
+	env := flag.String("env", "dev", "environment (dev, prod, staging)")
+	brand := flag.String("brand", "MYBRAND", "brand to be used in the message recipient")
 
 	db, err := createDbConn(*userDB, *passwordDB, *hostDB, *nameDB)
 	if err != nil {
@@ -24,10 +26,9 @@ func main() {
 		return
 	}
 
-	srv := phoval.NewHttpServer(*addr, &mysql.Database{db})
+	srv := phoval.NewHttpServer(*env, *addr, &mysql.Database{DB: db}, "")
 	log.Printf("Starting server on %s", *addr)
-	err = srv.ListenAndServe()
-	log.Fatal(err)
+	log.Fatal(srv.ListenAndServe())
 }
 
 func createDbConn(userDB string, passwordDB string, hostDB string, nameDB string) (*sql.DB, error) {

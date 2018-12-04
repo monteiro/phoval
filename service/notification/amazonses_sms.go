@@ -6,9 +6,12 @@ import (
 	"github.com/aws/aws-sdk-go/service/sns"
 )
 
+type AWSSESNotifier struct {
+}
+
 // Send SMS to a specific number with a specific SMS
 // Need to set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to send the message using your AWS account
-func Send(n *VerifyNotification) error {
+func (d AWSSESNotifier) Send(n VerificationNotification) error {
 	sess := session.Must(session.NewSession())
 	svc := sns.New(sess)
 	attrs := map[string]*sns.MessageAttributeValue{}
@@ -19,7 +22,7 @@ func Send(n *VerifyNotification) error {
 
 	attrs["AWS.SNS.SMS.SMSType"] = &sns.MessageAttributeValue{
 		DataType:    aws.String("String"),
-		StringValue: aws.String(n.Type),
+		StringValue: aws.String("Transactional"),
 	}
 
 	params := &sns.PublishInput{

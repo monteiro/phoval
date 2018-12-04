@@ -2,10 +2,15 @@ package phoval
 
 import (
 	"net/http"
+	"phoval/service/notification"
 	"time"
 )
 
-func NewHttpServer(addr string, storage VerificationStorage) *Server {
+const (
+	EnvProduction = "prod"
+)
+
+func NewHttpServer(env string, addr string, storage VerificationStorage, brand string) *Server {
 	httpServer := &http.Server{
 		Addr:           addr,
 		MaxHeaderBytes: 524288, //  limit the maximum header length to 0.5MB
@@ -15,11 +20,21 @@ func NewHttpServer(addr string, storage VerificationStorage) *Server {
 	}
 
 	server := &Server{
-		Server:  httpServer,
-		Storage: storage,
+		Server:               httpServer,
+		Storage:              storage,
+		Brand:                brand,
+		VerificationNotifier: getNotifier(env),
 	}
 
 	httpServer.Handler = server.Routes()
 
 	return server
+}
+
+func getNotifier(env string) VerificationNotifier {
+	if env == EnvProduction {
+		return notification.AWSSESNotifier{}
+	}
+
+	return notification.DummyNotification{}
 }
