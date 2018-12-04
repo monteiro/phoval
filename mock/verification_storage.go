@@ -1,4 +1,4 @@
-package storage
+package mock
 
 import (
 	"errors"
@@ -33,7 +33,7 @@ func (s *InMemoryStorage) ValidateVerification(v *phoval.PhoneCodeValidation) er
 	return errors.New("no validation request found")
 }
 
-func NewInMemoryStorage() *InMemoryStorage {
+func InMemoryVerificationStorage() *InMemoryStorage {
 	return &InMemoryStorage{
 		M: make(map[string]phoval.PhoneCodeValidation),
 	}

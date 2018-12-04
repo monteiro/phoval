@@ -14,11 +14,11 @@ import (
 const insertVerification = `INSERT INTO verification(id, country_code, phone_number, code, created_at) VALUES(?, ?, ?, ?, ?)`
 const validateVerification = `UPDATE verification SET verified_at = UTC_TIMESTAMP() WHERE country_code = ? and phone_number = ? AND code = ? AND verified_at IS NULL`
 
-type Database struct {
+type VerificationStorage struct {
 	DB *sql.DB
 }
 
-func (s *Database) CreateVerification(v *phoval.PhoneVerification) (string, error) {
+func (s *VerificationStorage) CreateVerification(v *phoval.PhoneVerification) (string, error) {
 	tx, err := s.DB.Begin()
 	if err != nil {
 		return "", err
@@ -53,7 +53,7 @@ func (s *Database) CreateVerification(v *phoval.PhoneVerification) (string, erro
 	return id.String(), nil
 }
 
-func (s *Database) ValidateVerification(v *phoval.PhoneCodeValidation) error {
+func (s *VerificationStorage) ValidateVerification(v *phoval.PhoneCodeValidation) error {
 	tx, err := s.DB.Begin()
 	if err != nil {
 		return err

@@ -2,6 +2,7 @@ package phoval
 
 import (
 	"net/http"
+	"phoval/mock"
 	"phoval/service/notification"
 	"time"
 )
@@ -36,5 +37,5 @@ func getNotifier(env string) VerificationNotifier {
 		return notification.AWSSESNotifier{}
 	}
 
-	return notification.DummyNotification{}
+	return mock.smsNotifier{}
 }

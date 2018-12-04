@@ -26,7 +26,7 @@ func main() {
 		return
 	}
 
-	srv := phoval.NewHttpServer(*env, *addr, &mysql.Database{DB: db}, "")
+	srv := phoval.NewHttpServer(*env, *addr, &mysql.VerificationStorage{DB: db}, "")
 	log.Printf("Starting server on %s", *addr)
 	log.Fatal(srv.ListenAndServe())
 }
