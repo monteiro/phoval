@@ -26,10 +26,6 @@ type VerificationNotifier interface {
 	Send(notification notification.VerificationNotification) error
 }
 
-type VerificationNotifierFactory interface {
-	Create() VerificationNotifier
-}
-
 type VerificationStorage interface {
 	CreateVerification(v *PhoneVerification) (string, error)
 	ValidateVerification(v *PhoneCodeValidation) error
