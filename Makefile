@@ -27,3 +27,6 @@ create-migration: build
 
 clean:
 	rm -rf bin
+
+tests:
+    go test ./...

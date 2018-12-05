@@ -5,10 +5,15 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"phoval"
-	"phoval/storage/mysql"
+	"monteiro/phoval/pkg/notification"
+	"monteiro/phoval/pkg/phoval"
+	"monteiro/phoval/pkg/phoval/storage/mysql"
 
 	_ "github.com/go-sql-driver/mysql"
+)
+
+const (
+	envProduction = "prod"
 )
 
 func main() {
@@ -17,6 +22,10 @@ func main() {
 	passwordDB := flag.String("passworddb", "root", "database password")
 	hostDB := flag.String("hostdb", "127.0.0.1", "database address")
 	nameDB := flag.String("namedb", "verif2fa", "database name")
+	env := flag.String("env", "dev", "environment (dev, prod, stag)")
+	brand := flag.String("brand", "phoval", "brand to be used in the message recipient")
+
+	flag.Parse()
 
 	db, err := createDbConn(*userDB, *passwordDB, *hostDB, *nameDB)
 	if err != nil {
@@ -24,10 +33,9 @@ func main() {
 		return
 	}
 
-	srv := phoval.NewHttpServer(*addr, &mysql.Database{db})
+	srv := phoval.NewHttpServer(*addr, &mysql.VerificationStorage{DB: db}, *brand, getVerificationNotifier(*env))
 	log.Printf("Starting server on %s", *addr)
-	err = srv.ListenAndServe()
-	log.Fatal(err)
+	log.Fatal(srv.ListenAndServe())
 }
 
 func createDbConn(userDB string, passwordDB string, hostDB string, nameDB string) (*sql.DB, error) {
@@ -37,4 +45,12 @@ func createDbConn(userDB string, passwordDB string, hostDB string, nameDB string
 	}
 
 	return db, nil
+}
+
+func getVerificationNotifier(env string) phoval.VerificationNotifier {
+	if env == envProduction {
+		return notification.AWSSESNotifier{}
+	}
+
+	return notification.LoggerSmsNotifier{}
 }

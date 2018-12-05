@@ -1,7 +1,7 @@
 package notification_test
 
 import (
-	"phoval/service/notification"
+	"monteiro/phoval/pkg/notification"
 	"testing"
 )
 

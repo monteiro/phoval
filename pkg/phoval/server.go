@@ -2,7 +2,6 @@ package phoval
 
 import (
 	"net/http"
-	"phoval/service/notification"
 )
 
 type Server struct {
@@ -11,6 +10,8 @@ type Server struct {
 	Addr string
 	// database
 	Storage VerificationStorage
-	// Notifier to send SMS or Emails
-	Notifier notification.Notifier
+	// to be used in the message to send with the code in the message recipient
+	Brand string
+	// used to send a message
+	VerificationNotifier VerificationNotifier
 }

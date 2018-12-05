@@ -1,9 +1,8 @@
-package storage
+package mock
 
 import (
 	"errors"
-	"phoval"
-	"phoval/pkg/generator"
+	"monteiro/phoval/pkg/phoval"
 
 	"github.com/satori/go.uuid"
 )
@@ -14,15 +13,10 @@ type InMemoryStorage struct {
 
 func (s *InMemoryStorage) CreateVerification(v *phoval.PhoneVerification) (string, error) {
 	id := uuid.NewV4().String()
-	code, err := generator.GenerateRandomDigits()
-	if err != nil {
-		return "", err
-	}
-
 	s.M[id] = phoval.PhoneCodeValidation{
 		CountryCode: v.CountryCode,
 		PhoneNumber: v.PhoneNumber,
-		Code:        code,
+		Code:        v.Code,
 	}
 
 	return id, nil
@@ -39,7 +33,7 @@ func (s *InMemoryStorage) ValidateVerification(v *phoval.PhoneCodeValidation) er
 	return errors.New("no validation request found")
 }
 
-func NewInMemoryStorage() *InMemoryStorage {
+func InMemoryVerificationStorage() *InMemoryStorage {
 	return &InMemoryStorage{
 		M: make(map[string]phoval.PhoneCodeValidation),
 	}

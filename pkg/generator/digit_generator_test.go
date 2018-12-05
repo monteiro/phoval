@@ -1,7 +1,7 @@
 package generator_test
 
 import (
-	"phoval/pkg/generator"
+	"monteiro/phoval/pkg/generator"
 	"strconv"
 	"testing"
 )

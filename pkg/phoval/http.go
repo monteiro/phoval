@@ -5,7 +5,11 @@ import (
 	"time"
 )
 
-func NewHttpServer(addr string, storage VerificationStorage) *Server {
+const (
+	EnvProduction = "prod"
+)
+
+func NewHttpServer(addr string, storage VerificationStorage, brand string, notifier VerificationNotifier) *Server {
 	httpServer := &http.Server{
 		Addr:           addr,
 		MaxHeaderBytes: 524288, //  limit the maximum header length to 0.5MB
@@ -15,8 +19,10 @@ func NewHttpServer(addr string, storage VerificationStorage) *Server {
 	}
 
 	server := &Server{
-		Server:  httpServer,
-		Storage: storage,
+		Server:               httpServer,
+		Storage:              storage,
+		Brand:                brand,
+		VerificationNotifier: notifier,
 	}
 
 	httpServer.Handler = server.Routes()
