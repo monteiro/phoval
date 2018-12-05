@@ -25,7 +25,7 @@ func (s *Server) NotFound(w http.ResponseWriter, desc string) {
 func (s *Server) error(w http.ResponseWriter, desc string, status int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
-	w.WriteHeader(http.StatusBadRequest)
+	w.WriteHeader(status)
 
 	if err := json.NewEncoder(w).Encode(ErrorResponse{
 		Code:        status,

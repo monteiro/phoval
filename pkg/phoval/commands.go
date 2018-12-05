@@ -2,9 +2,9 @@ package phoval
 
 import (
 	"log"
-	"phoval/messages"
-	"phoval/pkg/generator"
-	"phoval/service/notification"
+	"monteiro/phoval/pkg/generator"
+	"monteiro/phoval/pkg/notification"
+	"monteiro/phoval/pkg/phoval/messages"
 )
 
 func createVerificationCommandHandler(s VerificationStorage, v VerificationNotifier, c CreateVerificationCommand) (CreateVerificationResponse, error) {
@@ -54,6 +54,7 @@ func VerifyCodeCommandHandler(s VerificationStorage, c ValidateCodeCommand) erro
 	})
 
 	if err != nil {
+		log.Printf("%v", err)
 		return err
 	}
 

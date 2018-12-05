@@ -2,11 +2,12 @@ package phoval_test
 
 import (
 	"fmt"
+	"monteiro/phoval/mock"
+	"monteiro/phoval/pkg/phoval"
 	"net/http"
 	"net/http/httptest"
-	"phoval"
-	"phoval/mock"
 	"testing"
+
 )
 
 const anyPort = ":4000"
@@ -16,7 +17,7 @@ func TestHandleCreateVerification(t *testing.T) {
 	w := runTestHttpServer(t, mock.InMemoryVerificationStorage(), "POST", url)
 
 	if w.Code != http.StatusCreated {
-		t.Errorf("Handler returned wrong status code: got %v want %v", w.Code, http.StatusCreated)
+		t.Errorf("Handler returned wrong status code: goot %v want %v", w.Code, http.StatusCreated)
 	}
 
 	if w.Result().Header.Get("verification_id") == "" {
@@ -89,7 +90,7 @@ func TestHandleVerificationValidationErrors(t *testing.T) {
 }
 
 func runTestHttpServer(t *testing.T, v phoval.VerificationStorage, method string, url string) *httptest.ResponseRecorder {
-	srv := phoval.NewHttpServer("test", anyPort, v, "")
+	srv := phoval.NewHttpServer(anyPort, v, anyPort, mock.MessageNotifier{})
 	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
 		t.Errorf("Error creating request")

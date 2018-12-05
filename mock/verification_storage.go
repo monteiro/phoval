@@ -2,7 +2,7 @@ package mock
 
 import (
 	"errors"
-	"phoval"
+	"monteiro/phoval/pkg/phoval"
 
 	"github.com/satori/go.uuid"
 )

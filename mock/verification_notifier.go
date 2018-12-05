@@ -1,17 +1,18 @@
 package mock
 
 import (
-	"log"
-	"phoval/service/notification"
+	"monteiro/phoval/pkg/notification"
 )
 
 type VerificationNotification struct {
 }
 
-type SmsNotifier struct {
+type MessageNotifier struct {
+	Invoked bool
 }
 
-func (d SmsNotifier) Send(n notification.VerificationNotification) error {
-	log.Printf("SMS was sent: '%v'\n", n)
+func (d MessageNotifier) Send(n notification.VerificationNotification) error {
+	d.Invoked = true
+
 	return nil
 }

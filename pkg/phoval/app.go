@@ -1,6 +1,6 @@
 package phoval
 
-import "phoval/service/notification"
+import "monteiro/phoval/pkg/notification"
 
 // VerifyNotification send a message to the user with the code
 type PhoneVerification struct {

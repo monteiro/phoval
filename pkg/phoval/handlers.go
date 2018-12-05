@@ -2,9 +2,11 @@ package phoval
 
 import (
 	"fmt"
+	"log"
 	"net/http"
-	"phoval/service/notification"
 	"strconv"
+
+	"github.com/monteiro/phoval/service/notification"
 )
 
 const (
@@ -47,7 +49,9 @@ func (s *Server) HandleCreateVerification() http.HandlerFunc {
 
 		resp, err := createVerificationCommandHandler(s.Storage, s.VerificationNotifier, command)
 		if err != nil {
+			log.Fatalf("An internal server has occurred: '%v'", err)
 			s.InternalServerError(w)
+			return
 		}
 
 		w.Header().Add("verification_id", resp.id)
