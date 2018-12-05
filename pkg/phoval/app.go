@@ -55,3 +55,7 @@ type ValidateCodeCommand struct {
 	// code to verify
 	Code string
 }
+
+type NotificationRenderer interface {
+	Render(locale string, code string) (string, error)
+}

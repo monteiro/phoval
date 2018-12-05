@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"monteiro/phoval/messages"
 	"monteiro/phoval/pkg/notification"
 	"monteiro/phoval/pkg/phoval"
 	"monteiro/phoval/pkg/phoval/storage/mysql"
@@ -25,6 +26,7 @@ func main() {
 	env := flag.String("env", "dev", "environment (dev, prod, stag)")
 	brand := flag.String("brand", "phoval", "brand to be used in the message recipient")
 	apiKey := flag.String("apiKey", "changeme", "api key to access this API")
+	tlpFolder := flag.String("template-folder", "messages", "notification templates for every locale")
 
 	flag.Parse()
 
@@ -34,7 +36,9 @@ func main() {
 		return
 	}
 
-	srv := phoval.NewHttpServer(*addr, &mysql.VerificationStorage{DB: db}, *brand, getVerificationNotifier(*env), *apiKey)
+	srv := phoval.NewHttpServer(*addr, &mysql.VerificationStorage{DB: db}, *brand, getVerificationNotifier(*env), *apiKey, messages.TemplateFolderRender{
+		TemplateFolder: *tlpFolder,
+	})
 	log.Printf("Starting server on %s", *addr)
 	log.Fatal(srv.ListenAndServe())
 }
