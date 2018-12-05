@@ -9,7 +9,7 @@ const (
 	EnvProduction = "prod"
 )
 
-func NewHttpServer(addr string, storage VerificationStorage, brand string, notifier VerificationNotifier) *Server {
+func NewHttpServer(addr string, storage VerificationStorage, brand string, notifier VerificationNotifier, apiKey string) *Server {
 	httpServer := &http.Server{
 		Addr:           addr,
 		MaxHeaderBytes: 524288, //  limit the maximum header length to 0.5MB
@@ -23,6 +23,7 @@ func NewHttpServer(addr string, storage VerificationStorage, brand string, notif
 		Storage:              storage,
 		Brand:                brand,
 		VerificationNotifier: notifier,
+		ApiKey:               apiKey,
 	}
 
 	httpServer.Handler = server.Routes()

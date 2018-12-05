@@ -14,4 +14,6 @@ type Server struct {
 	Brand string
 	// used to send a message
 	VerificationNotifier VerificationNotifier
+	// api key authorization
+	ApiKey string
 }
