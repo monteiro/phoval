@@ -1,17 +1,22 @@
 language: go
 go:
-- 1.11.x
+  - 1.11.x
+env:
+  - GO111MODULE=on
+
 script:
-- env GO111MODULE=on go mod download
-- env GO111MODULE=on go test -race ./...
+  - go test -race ./...
+
 notifications:
   email:
     on_success: never
     on_failure: always
+
 before_deploy:
-- env GO111MODULE=on GOOS=linux go build -o bin/phoval-linux cmd/main/main.go
-- env GO111MODULE=on GOOS=darwin go build -o bin/phoval-mac cmd/main/main.go
-- env GO111MODULE=on GOOS=windows go build -o bin/phoval.exe cmd/main/main.go
+  - GOOS=linux go build -o bin/phoval-linux cmd/main/main.go
+  - GOOS=darwin go build -o bin/phoval-mac cmd/main/main.go
+  - GOOS=windows go build -o bin/phoval.exe cmd/main/main.go
+
 deploy:
   provider: releases
   api_key:
