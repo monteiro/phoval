@@ -4,10 +4,9 @@ import (
 	"log"
 	"monteiro/phoval/pkg/generator"
 	"monteiro/phoval/pkg/notification"
-	"monteiro/phoval/pkg/phoval/messages"
 )
 
-func createVerificationCommandHandler(s VerificationStorage, v VerificationNotifier, c CreateVerificationCommand) (CreateVerificationResponse, error) {
+func createVerificationCommandHandler(s VerificationStorage, v VerificationNotifier, n NotificationRenderer, c CreateVerificationCommand) (CreateVerificationResponse, error) {
 	r := CreateVerificationResponse{}
 
 	code, err := generator.GenerateRandomDigits()
@@ -24,19 +23,19 @@ func createVerificationCommandHandler(s VerificationStorage, v VerificationNotif
 		return r, err
 	}
 
-	m, err := messages.Template(c.Locale, code)
+	m, err := n.Render(c.Locale, code)
 	if err != nil {
 		return r, err
 	}
 
-	n := notification.VerificationNotification{
+	notif := notification.VerificationNotification{
 		CountryCode: c.CountryCode,
 		PhoneNumber: c.PhoneNumber,
 		From:        c.From,
 		Message:     m,
 	}
 
-	if err := v.Send(n); err != nil {
+	if err := v.Send(notif); err != nil {
 		log.Fatalf("error sending message: '%v'", n)
 		return r, err
 	}

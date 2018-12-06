@@ -8,8 +8,8 @@ import (
 
 func (s *Server) Routes() http.Handler {
 	mux := pat.New()
-	mux.Post("/phone/verification", http.HandlerFunc(LogRequest(s.HandleCreateVerification())))
-	mux.Put("/phone/verification", http.HandlerFunc(LogRequest(s.HandleVerification())))
+	mux.Post("/phone/verification", http.HandlerFunc(LogRequest(ApiKeyAuthorization(s.HandleCreateVerification(), s.ApiKey))))
+	mux.Put("/phone/verification", http.HandlerFunc(LogRequest(ApiKeyAuthorization(s.HandleVerification(), s.ApiKey))))
 
 	return mux
 }

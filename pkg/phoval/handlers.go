@@ -47,9 +47,9 @@ func (s *Server) HandleCreateVerification() http.HandlerFunc {
 			From:        s.Brand,
 		}
 
-		resp, err := createVerificationCommandHandler(s.Storage, s.VerificationNotifier, command)
+		resp, err := createVerificationCommandHandler(s.Storage, s.VerificationNotifier, s.NotificationRenderer, command)
 		if err != nil {
-			log.Fatalf("An internal server has occurred: '%v'", err)
+			log.Fatalf("An internal server error has occurred: '%v'", err)
 			s.InternalServerError(w)
 			return
 		}
