@@ -13,9 +13,9 @@ notifications:
     on_failure: always
 
 before_deploy:
-  - GOOS=linux go build -o bin/phoval-linux cmd/main/main.go
-  - GOOS=darwin go build -o bin/phoval-mac cmd/main/main.go
-  - GOOS=windows go build -o bin/phoval.exe cmd/main/main.go
+  - GOOS=linux go build -o bin/phoval-linux cmd/main.go
+  - GOOS=darwin go build -o bin/phoval-mac cmd/main.go
+  - GOOS=windows go build -o bin/phoval.exe cmd/main.go
 
 deploy:
   provider: releases
