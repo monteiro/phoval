@@ -1,6 +1,6 @@
 # Phone validation API using Go
 
-Still in early stage.
+[![Windows, Linux and macOS Build Status](https://api.travis-ci.org/monteiro/phoval?branch=master&label=Windows+and+Linux+and+macOS+build "Windows, Linux and macOS Build Status")](https://travis-ci.org/monteiro/phoval)
 
 ## Motivation
 
@@ -35,7 +35,3 @@ PUT `/phone/verification&phone_number=919999999&country_code=351&code=768782`
 `204`: Verification was validated with success
 
 `409`: Verification does not exist or Verification exists and it was already validated
-
-
-
-
