@@ -4,6 +4,7 @@ go:
   - 1.11.x
 
 script:
+  - go mod download
   - go test -race ./...
 
 notifications:
