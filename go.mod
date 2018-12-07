@@ -6,7 +6,6 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/kr/pretty v0.1.0 // indirect
-	github.com/monteiro/phoval v0.0.0-20181129151132-0c7f7132e56b
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/satori/go.uuid v1.2.0
 	github.com/stretchr/testify v1.2.2 // indirect

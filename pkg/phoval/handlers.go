@@ -3,10 +3,9 @@ package phoval
 import (
 	"fmt"
 	"log"
+	"monteiro/phoval/pkg/notification"
 	"net/http"
 	"strconv"
-
-	"github.com/monteiro/phoval/service/notification"
 )
 
 const (

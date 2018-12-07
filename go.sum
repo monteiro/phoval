@@ -14,8 +14,7 @@ github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORN
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0 h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/monteiro/phoval v0.0.0-20181129151132-0c7f7132e56b h1:cSKY17JJtsnYp39cHAs1H5Z4cj1XvwabtR4Hyp5Yyco=
-github.com/monteiro/phoval v0.0.0-20181129151132-0c7f7132e56b/go.mod h1:AZ6+envKUTrqGcSrDtnaIqTYjtREgqnL3RG2ETzCMTQ=
+github.com/monteiro/phoval v0.0.0-20181206124551-3954e1401025 h1:PymCT9WrEQlA7J1HvzhWaQd3ivU8MiNDK9iF3bMaLco=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/satori/go.uuid v1.2.0 h1:0uYX9dsZ2yD7q2RtLRtPSdGDWzjeM3TbMJP9utgA0ww=
