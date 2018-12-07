@@ -101,6 +101,16 @@ How can you help and contribute to this tool:
 
 #### Development environment: 
 
+Set the environment variables:
+
+```bash
+export DB_USER=root
+export DB_PASSWORD=root
+export DB_HOST=127.0.0.1
+export DB_PORT=3306
+export DB_NAME=verif2fa
+```
+
 ```
 make docker-up
 make migrate
