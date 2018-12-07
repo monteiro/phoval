@@ -13,9 +13,12 @@ Testing locally:
 
 ```
 make docker-up 
+make migrate
 ```
 
-It will instantiate 2 containers (one MySQL and one executing the binary with the tool in development mode).
+You can now call the API using curl or any other tool.
+
+It will instantiate 2 containers (one _MySQL_ and one executing the binary with the tool in development mode).
 In **Development mode** you can test the API and see the results in the output of `docker-compose`:
 
 ```
@@ -26,8 +29,23 @@ phovalapp_1_d00e1ca2feb7 |  phoval}'
 
 ## Run the http server on your machine or in production
 
+Define the following environment variables for _AWS SES_ and _MySQL_ Database configuration:
+
+```
+export AWS_SDK_LOAD_CONFIG=1
+export AWS_ACCESS_KEY_ID=XXXXXX
+export AWS_SECRET_ACCESS_KEY=XXXXXX
+export AWS_DEFAULT_REGION=XXXXXX
+export DB_USER=XXXXXX
+export DB_PASSWORD=XXXXXX
+export DB_HOST=XXXXXX
+export DB_PORT=3306
+export DB_NAME=XXXXXX
+```
+
 ```
 make build
+make migrate
 ./bin/phoval-{linux,mac} or ./bin/phoval-windows.exe {flags}
 ```
 
@@ -85,6 +103,7 @@ How can you help and contribute to this tool:
 
 ```
 make docker-up
+make migrate
 make deps
 make run
 ```
