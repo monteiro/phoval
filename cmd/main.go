@@ -25,7 +25,7 @@ func main() {
 	nameDB := flag.String("namedb", "verif2fa", "database name")
 	env := flag.String("env", "dev", "environment (dev, prod, stag)")
 	brand := flag.String("brand", "phoval", "brand to be used in the message recipient")
-	apiKey := flag.String("apiKey", "changeme", "api key to access this API")
+	apiKey := flag.String("apikey", "changeme", "api key to access this API")
 	tlpFolder := flag.String("template-folder", "messages", "notification templates for every locale")
 
 	flag.Parse()

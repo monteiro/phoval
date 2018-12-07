@@ -1,6 +1,6 @@
 # Phone validation API using Go
 
-[![Windows, Linux and macOS Build Status](https://api.travis-ci.org/monteiro/phoval?branch=master&label=Windows+and+Linux+and+macOS+build "Windows, Linux and macOS Build Status")](https://travis-ci.org/monteiro/phoval)
+[![Build Status](https://travis-ci.org/monteiro/phoval.svg?branch=master)](https://travis-ci.org/monteiro/phoval)
 
 ## Motivation
 
@@ -9,9 +9,47 @@ The goal with this tool is to allow all businesses to deploy this solution in-ho
 
 ## Install
 
-TBD
+Testing locally:
 
-## API
+```
+make docker-up 
+```
+
+It will instantiate 2 containers (one MySQL and one executing the binary with the tool in development mode).
+In **Development mode** you can test the API and see the results in the output of `docker-compose`:
+
+```
+phovalapp_1_d00e1ca2feb7 | 2018/12/07 09:56:58 172.21.0.1:36848 - "HTTP/1.1 POST /phone/verification?phone_number=963695658&country_code=351"
+phovalapp_1_d00e1ca2feb7 | 2018/12/07 09:56:58 SMS was sent: '{351 9611111111 This is your code: 799184
+phovalapp_1_d00e1ca2feb7 |  phoval}'
+``` 
+
+## Run the http server on your machine or in production
+
+```
+make build
+./bin/phoval-{linux,mac} or ./bin/phoval-windows.exe {flags}
+```
+
+### Usage
+
+- `addr`: Http network address and port to bind (e.g. 192.168.0.1:4000)
+- `userdb`: database user
+- `passworddb`: database user password
+- `hostdb`: database host
+- `namedb`: database name
+- `env`: environment ("prod", "dev" or testing) - it will use a different SMS implementation according to the environment value.
+- `brand`: brand name used in the SMS to specify the where it comes (e.g. phoval-brand)
+- `apikey`: api key to protect the service. By default it's `changeme`. Better to change it in production.
+- `template-folder`: template folder where are the SMS templates. Currently it's in `messages` folder.  
+
+Example:
+
+```
+bin/phoval-linux -addr=phoval-app.com:4000 -userdb=myDbUser -passworddb=myDbPassword -hostdb=phovaldb.com -namedb=phoval -env=prod -brand=phoval -apikey=secret -template-folder=/usr/messages/
+```
+
+## API usage
 
 Arguments:
 - phone_number (string): phone number 
@@ -35,3 +73,18 @@ PUT `/phone/verification&phone_number=919999999&country_code=351&code=768782`
 `204`: Verification was validated with success
 
 `409`: Verification does not exist or Verification exists and it was already validated
+
+### Contribution
+
+How can you help and contribute to this tool:
+
+- [Creating issues](https://github.com/monteiro/phoval/issues/new) with ideas
+- Creating PRs of those ideas
+
+#### Development environment: 
+
+```
+make docker-up
+make deps
+make run
+```
